@@ -14,6 +14,64 @@
                 <div class="box box-primary">
                     <!-- /.box-header -->
                     <div class="box-body">
+                         <?php  $log_id=$this->session->userdata('type');
+               if($log_id==1 || $log_id==4 || $log_id==2 ){ ?>
+            
+                   
+                        <div class="row" style="margin-bottom: 10px">
+             <!-- <div class="alert alert-success"> -->
+              <form name="fillter" method="post" id="fillter" action="<?php echo base_url('complain/index') ?>">
+                     
+                  
+                    <div class="col-md-3">
+                       
+                        <label for="int">Status<?php echo form_error('com_status') ?></label>
+
+
+                        <select class="form-control" name="com_status" id="com_status">
+                            <option value="">Select Status</option>
+                            <option value="1"<?php if($com_status==1){echo 'selected';} ?>>Open</option>
+                            <option value="2"<?php if($com_status==2){echo 'selected';} ?>>Closed</option>
+                            <option value="3"<?php if($com_status==3){echo 'selected';} ?>>Wip</option>
+                            <option value="4"<?php if($com_status==4){echo 'selected';} ?>>Vender Required</option>
+                            <option value="5"<?php if($com_status==5){echo 'selected';} ?>>Vender Allocated</option>
+                            <option value="6"<?php if($com_status==6){echo 'selected';} ?>>Oh hold</option>
+                            <option value="7"<?php if($com_status==7){echo 'selected';} ?>>Cust Damage</option>
+                        </select>
+
+                                                
+                    </div>
+
+                     <div class="col-md-3">
+                         <label for="int">Building <?php echo form_error('building_id') ?></label>
+
+                        <select class="form-control" name="building_id" id="building_id">
+
+                            <option value="">--Select--</option>
+
+                            <?php foreach ($building as $key => $value) {?>
+
+                                <option value="<?php echo $value->id ?>" <?php if($building_id==$value->id){echo 'selected';} ?>><?php echo $value->name ?></option>
+
+                            <?php  } ?>
+
+                        </select>
+                     </div>
+
+                                       
+
+                    
+                    <div class="col-xs-3" >
+                       <button type="submit" class="btn btn-primary form-control" name="bt" value="submit" style="margin-top: 23px;">Submit</button> 
+                    </div>
+            </form>
+        <!-- </div> -->
+            <div class="col-xs-3"  style="margin-top: 23px;">
+                       
+                       <a href="<?php echo base_url('complain/create') ?>" class="btn btn-primary pull-right " >Create</a>
+                    </div> 
+        </div>
+      <?php } ?>
                         <!-- ******************/master header end ****************** -->
         <div class="row" style="margin-bottom: 10px">
             <div class="col-md-4">
@@ -30,25 +88,28 @@
             $block_style="display: none";   // vender not see - customer see
             $block_hide="display: none";    // vender not see - customer not see 
             $blo_hide="display: show";      // vender  see - customer not see
+            $list_show="display: show";      // vender  see - customer see  all see
 
         }
          elseif($login_type==3){
            $block_style="display: show";
             $block_hide="display: none";
             $blo_hide="display: none";
+             $list_show="display: show";
 
         }
         else{
             $block_style="display: show";
             $block_hide="display: show";
             $blo_hide="display: show";
+             $list_show="display: show";
         }
 
 
         ?>
             <div class="col-md-4 text-right" style="<?php echo $block_style;  ?>">
-                <?php echo anchor(site_url('complain/create'), 'Create', 'class="btn btn-primary"'); ?>
-		<?php echo anchor(site_url('complain/excel'), 'Excel', 'class="btn btn-primary"'); ?>
+                <?php //echo anchor(site_url('complain/create'), 'Create', 'class="btn btn-primary"'); ?>
+		<?php //echo anchor(site_url('complain/excel'), 'Excel', 'class="btn btn-primary"'); ?>
 	    </div>
         </div>
         <div style="overflow-x:auto;">
@@ -66,26 +127,32 @@
 		    <th>Com Details</th>
 		    <th>Asset Id</th>
 		    <th>Model</th>
-		    <th>Bill</th>
-		    <th>Warranty</th>
-		    <th>Image</th>
-		    <th>Recovery Amount</th>
-		    <th>Closure Remark</th>
-		    <th>Closure Remark By</th>
-		    <th>Agreed Amount</th>
-		    <th>Tat</th>
-		    <th>Icr</th>
-		    <th>Closed By</th>
-		    <th>Assign Vender</th>
-		    <th>Category</th>
-		    <th>Vendor Bill</th>
-		    <th>Shop Name</th>
-		    <th>Amount</th>
-		    <th>Part Details</th>
-		    <th>Material Cost</th>
-		    <th>Labour Cost</th>
-		    <th>Createdat</th>
-		    <th>Action</th>
+            <th>Image</th>
+		   
+		    <th style="<?php echo  $block_style ?>">Recovery Amount</th>
+		    <th style="<?php echo  $block_style ?>">Closure Remark</th>
+		    <th style="<?php echo  $block_style ?>">Closure Remark By</th>
+            <th style="<?php echo  $block_style ?>">Closed By</th>
+
+             <th style="<?php echo  $block_hide ?>">Icr</th>
+
+             <th style="<?php echo  $blo_hide ?>">Bill</th>
+            <th style="<?php echo  $blo_hide ?>">Warranty</th>
+		    <th style="<?php echo  $blo_hide ?>">Agreed Amount</th>
+		    <th style="<?php echo  $blo_hide ?>">Tat</th>
+            <th style="<?php echo  $blo_hide ?>">Assign Vender</th>
+
+		    
+		    
+		    <th style="<?php echo  $blo_hide ?>">Category</th>
+		    <th style="<?php echo  $blo_hide ?>">Vendor Bill</th>
+		    <th style="<?php echo  $blo_hide ?>">Shop Name</th>
+		    <th style="<?php echo  $blo_hide ?>">Amount</th>
+		    <th style="<?php echo  $blo_hide ?>">Part Details</th>
+		    <th style="<?php echo  $blo_hide ?>">Material Cost</th>
+		    <th style="<?php echo  $blo_hide ?>">Labour Cost</th>
+		    <th style="<?php echo  $blo_hide ?>">Createdat</th>
+		    <th style="<?php echo  $blo_hide ?>">Action</th>
                 </tr>
             </thead>
 	    <tbody>
@@ -140,25 +207,32 @@
 		    <td><?php echo $complain->com_details ?></td>
 		    <td><?php echo $complain->asset_id ?></td>
 		    <td><?php echo $complain->model ?></td>
-		    <td><?php echo $complain->bill ?></td>
-		    <td><?php echo $complain->warranty ?></td>
-		    <td><img src="<?php echo base_url($complain->image) ?>"style="height: 60px;"></td>
-		    <td><?php echo $complain->re_amount ?></td>
-		    <td><?php echo $complain->closure_remark ?></td>
-		    <td><?php echo $complain->closure_remark_by ?></td>
-		    <td><?php echo $complain->agreed_amount ?></td>
-		    <td><?php echo $complain->tat ?></td>
-		    <td><?php echo $complain->icr ?></td>
-		    <td><?php echo ($complain->closed_by==1)?'Staff':'Vender'; ?></td>
-		    <td><?php echo ($complain->assign_vender==1)?'yes':'no'; ?></td>
-		    <td><?php $res=$this->Expense_category_model->get_by_id($complain->category);if($res){echo $res->name;} ?></td>
-		    <td><?php echo $complain->vendor_name ?></td>
-		    <td><?php echo $complain->shop_name ?></td>
-		    <td><?php echo $complain->amount ?></td>
-		    <td><?php echo $complain->part_details ?></td>
-		    <td><?php echo $complain->material_cost ?></td>
-		    <td><?php echo $complain->labour_cost ?></td>
-		    <td><?php echo $complain->createdat; ?></td>
+             <td><img src="<?php echo base_url($complain->image) ?>"style="height: 60px;"></td>
+
+		   
+		    
+		    <td style="<?php echo  $block_style ?>" ><?php echo $complain->re_amount ?></td>
+		    <td style="<?php echo  $block_style ?>"><?php echo $complain->closure_remark ?></td>
+		    <td style="<?php echo  $block_style ?>"><?php echo $complain->closure_remark_by ?></td>
+            <td style="<?php echo  $block_style ?>"><?php echo ($complain->closed_by==1)?'Staff':'Vender'; ?></td>
+
+            <td style="<?php echo  $block_hide ?>"><?php echo $complain->icr ?></td>
+
+            <td style="<?php echo  $blo_hide ?>"><?php echo $complain->bill ?></td>
+            <td style="<?php echo  $blo_hide ?>"><?php echo $complain->warranty ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->agreed_amount ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->tat ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo ($complain->assign_vender==1)?'yes':'no'; ?></td>
+		    
+		    
+		    <td style="<?php echo  $blo_hide ?>"><?php $res=$this->Expense_category_model->get_by_id($complain->category);if($res){echo $res->name;} ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->vendor_name ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->shop_name ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->amount ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->part_details ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->material_cost ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->labour_cost ?></td>
+		    <td style="<?php echo  $blo_hide ?>"><?php echo $complain->createdat; ?></td>
 		    <td style="text-align:center" width="200px">
                 <a href="<?php echo base_url('complain/read/'.$complain->id) ?>" style="<?php echo $block_style; ?>"><i class="fa fa-eye"></i></a>
                 <a href="<?php echo base_url('complain/update/'.$complain->id) ?>" style="<?php echo $blo_hide; ?>"><i class="fa fa-pencil-square-o"></i></a>

@@ -78,8 +78,6 @@
 
                                             <label for="int">Building <?php echo form_error('building_id') ?></label>
 
-                                            <!-- <input type="text" class="form-control" name="building_id" id="building_id" placeholder="Building Id" value="<?php echo $building_id; ?>" /> -->
-
                                             <select class="form-control" name="building_id" id="building_id">
 
                                                 <option value="">--Select--</option>

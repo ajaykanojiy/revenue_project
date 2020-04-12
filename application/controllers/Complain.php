@@ -13,13 +13,30 @@ class Complain extends CI_Controller
     }
 
     public function index()
-    {
+    {  
+
+    	// echo $this->input->post('com_status');
+    	if($this->input->post('com_status') || $this->input->post('building_id')!=""){
+
+    		// echo 'ajay';die;
+    	 $fillter=array(
+         'com_status'=>$this->input->post('com_status'),
+         'building_id'=>$this->input->post('building_id')
+        );
+    	$data['complain_data']= $this->Complain_model->get_report($fillter);
+    	// echo '<pre>';
+    	 // print_r($data);die;
+        
+    	}else{
         $complain = $this->Complain_model->get_all();
 
         $data = array(
             'complain_data' => $complain
         );
-
+     }
+         $data['com_status'] = set_value('com_status');
+         $data['building_id'] = set_value('building_id');
+         $data['building']=$this->Building_model->get_all();
           $data['content'] = 'complain/complain_list';
         $this->load->view('common/master', $data);    
             

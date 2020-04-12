@@ -147,6 +147,39 @@ class Complain_model extends CI_Model
         $this->db->delete($this->table);
     }
 
+     public function get_report($value)
+    {  
+        $condition = '0=0 ';
+        if ($value['building_id'] != '') {
+            $condition .= ' AND building_id=' . $value['building_id'];
+        }
+
+        if ($value['com_status'] != '') {
+            $condition .= ' AND com_status=' . $value['com_status'];
+        }
+
+        // if ($value['mode']!='') {
+        //     $condition .= ' AND payment_mode=' . $value['mode'];
+        // }
+
+         
+              
+       $this->db->where($condition, NULL, FALSE);
+       // $this->db->group_by('emp_id');
+        //$res = $this->db->get('revenue')->result();
+       // echo $this->db->last_query();
+    return   $res = $this->db->get($this->table)->result();
+       // $res2= $this->get_report2($value);
+       // $res3= $this->get_report3($value);
+       // $data=array(
+       //  'res'=>$res,
+       //  'res2'=>$res2,
+       //  'res3'=>$res3
+       // );
+       // return $data;
+       
+      } 
+
 }
 
 /* End of file Complain_model.php */
